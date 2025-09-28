@@ -1,0 +1,19 @@
+services:
+  hello-world:
+    image: kami92/hello-world
+    build: .
+    ports:
+      - '3010:3000'
+  nginx:
+    image: nginx
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./src:/usr/share/nginx/html
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/data:/etc/letsencrypt
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/www:/var/www/certbot
